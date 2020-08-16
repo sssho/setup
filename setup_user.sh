@@ -55,7 +55,7 @@ setup_py_virtualenv() {
     # Install basic plugins
     "$venv/bin/pip3" install flake8 flake8-isort flake8-docstrings black pytest isort pylint mypy ipython
 
-    local confdir="$HOME/.config/$USER"
+    local confdir="$HOME/.config/user"
     [ -d "$confdir" ] || mkdir -p "$confdir"
 
     local pyenvfile="$confdir/pyenvs"
