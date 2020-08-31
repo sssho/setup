@@ -1,6 +1,6 @@
 #!/bin/bash
 
-install_local_python() {
+install_python() {
     local installdir=$1
     local version=$2
 
@@ -62,7 +62,7 @@ setup_py_virtualenv() {
     grep "$venv/bin/activate" "$pyenvfile" >&/dev/null || echo "$venv/bin/activate" >>"$pyenvfile"
 }
 
-install_local_go() {
+install_go() {
     local installdir=$1
 
     local srcdir="${installdir}/src"
@@ -86,7 +86,7 @@ install_local_go() {
 }
 
 # Install rust and fd, ripgrep
-install_local_rust() {
+install_rust() {
     local installdir=$1
 
     local srcdir="${installdir}/src"
@@ -112,7 +112,7 @@ install_local_rust() {
     cargo install --root "$installdir" bat
 }
 
-install_local_shellcheck() {
+install_shellcheck() {
     local installdir=$1
 
     local srcdir="${installdir}/src"
@@ -136,7 +136,7 @@ install_local_shellcheck() {
     [ -x "$target" ] || return 1
 }
 
-install_local_fzf() {
+install_fzf() {
     local installdir="$1"/fzf
     local target="$installdir"/bin/fzf
 
@@ -157,7 +157,7 @@ install_local_fzf() {
     [ -x "$target" ] || return 1
 }
 
-install_local_vim() {
+install_vim() {
     local installdir=$1
     local pydir=$2
 
@@ -204,7 +204,7 @@ install_local_vim() {
     [ -x "$target" ] || return 1
 }
 
-install_local_zplug() {
+install_zplug() {
     local target="$1"/zplug
 
     [ -d "$target" ] && {
@@ -217,7 +217,7 @@ install_local_zplug() {
     [ -d "$target" ] || return 1
 }
 
-install_local_vimplug() {
+install_vimplug() {
     local target="$HOME/.vim/autoload/plug.vim"
 
     [ -e "$target" ] && {
@@ -231,7 +231,7 @@ install_local_vimplug() {
     [ -e "$target" ] || return 1
 }
 
-install_local_ctags() {
+install_ctags() {
     local installdir=$1
 
     local srcdir="${installdir}/src"
@@ -266,7 +266,7 @@ install_local_ctags() {
     [ -x "$target" ] || return 1
 }
 
-install_local_gtags() {
+install_gtags() {
     local installdir=$1
 
     local srcdir="${installdir}/src"
@@ -298,7 +298,7 @@ install_local_gtags() {
     [ -x "$target" ] || return 1
 }
 
-install_local_colordiff() {
+install_colordiff() {
     local installdir=$1
     local srcdir="$1"/src
 
@@ -317,7 +317,7 @@ readonly pyversion="3.6.10"
 
 export PATH="$localdir/bin:$PATH"
 
-install_local_python "$localdir" "$pyversion" || {
+install_python "$localdir" "$pyversion" || {
     echo "python install failed"
     exit 1
 }
@@ -327,52 +327,52 @@ setup_py_virtualenv "$localdir/python" "$pyversion" "${pyversion}-main" || {
     exit 1
 }
 
-install_local_go "$localdir" || {
+install_go "$localdir" || {
     echo "go install failed"
     exit 1
 }
 
-install_local_rust "$localdir" || {
+install_rust "$localdir" || {
     echo "rust install failed"
     exit 1
 }
 
-install_local_fzf "$localdir" || {
+install_fzf "$localdir" || {
     echo "fzf install failed"
     exit 1
 }
 
-install_local_vim "$localdir" "$localdir/python/$pyversion" || {
+install_vim "$localdir" "$localdir/python/$pyversion" || {
     echo "vim install failed"
     exit 1
 }
 
-install_local_vimplug || {
+install_vimplug || {
     echo "vimplug install failed"
     exit 1
 }
 
-install_local_zplug "$localdir" || {
+install_zplug "$localdir" || {
     echo "zplug install failed"
     exit 1
 }
 
-install_local_ctags "$localdir" || {
+install_ctags "$localdir" || {
     echo "ctags install failed"
     exit 1
 }
 
-install_local_gtags "$localdir" || {
+install_gtags "$localdir" || {
     echo "gtags install failed"
     exit 1
 }
 
-install_local_shellcheck "$localdir" || {
+install_shellcheck "$localdir" || {
     echo "shellcheck install failed"
     exit 1
 }
 
-install_local_colordiff "$localdir" || {
+install_colordiff "$localdir" || {
     echo "colordiff install failed"
     exit 1
 }
