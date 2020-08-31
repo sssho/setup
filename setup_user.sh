@@ -231,6 +231,14 @@ install_vimplug() {
     [ -e "$target" ] || return 1
 }
 
+install_tpm() {
+    local target="$HOME"/local/tmux/plugins/tpm
+
+    git clone https://github.com/tmux-plugins/tpm.git -b v3.0.0 "$target"
+
+    [ ! -e "$target" ] && return 1
+}
+
 install_ctags() {
     local installdir=$1
 
@@ -344,6 +352,11 @@ install_fzf "$localdir" || {
 
 install_vim "$localdir" "$localdir/python/$pyversion" || {
     echo "vim install failed"
+    exit 1
+}
+
+install_tpm || {
+    echo "tpm install failed"
     exit 1
 }
 
