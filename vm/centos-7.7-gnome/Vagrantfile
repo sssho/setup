@@ -1,0 +1,28 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/centos-7.7"
+  config.vm.hostname = "nurupo2"
+  config.vm.define "centos-7.7-gnome-trial"
+  config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+  config.vbguest.installer_options = { allow_kernel_upgrade: true }
+
+  config.vm.provider "virtualbox" do |vb|
+      vb.gui = true
+      vb.memory = "4096"
+      vb.customize [
+        "modifyvm", :id,
+        "--vram", "256", # For full-screen mode
+        "--clipboard", "bidirectional",
+        "--cpus", "2"
+      ]
+  end
+
+  config.vm.provision "shell" do |s|
+    s.inline = "echo $1 and $2"
+    # s.path = "script/init.sh"
+    s.args = ["sssho", "1234"]
+  end
+end
